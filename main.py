@@ -6,6 +6,17 @@ names = []
 global questions_answers
 asked = []
 score=0
+global choice 
+choice=0 
+
+
+def selector(): 
+   global qnum
+   qnum = random.randint(1,5) 
+   if qnum not in asked:
+      asked.append(qnum)
+   elif qnum in asked:
+      selector()
 
 class Homescreen:
     def __init__(self, parent):
@@ -46,48 +57,71 @@ class Homescreen:
      
            
 class questions: 
-       def __init__(self, parent):
-        background_color="white"
+  def __init__(self, parent):
+        selector()
+        background_color="#FFE3D8"
         
-        self.question_label=questions(self.quiz_frame, text = questions_answers[1][0], font=("Tw Cen MT", "18", "bold"),bg=background_color)
-        self.question_label.place() 
-  
 
-        questions_answers = {
-        1:  ["The thumb has the fastest growing nail.", 
-               'True', 'False', 2], 
+
+        self.questions_answers = {
+        1:  ["‎ ‎ ‎ ‎ ‎ ‎ The thumb has the fastest growing nail.‎ ‎ ‎ ‎ ‎ ‎ ", 
+               'True', 'False', 2, "False"], 
       
         2: ["There are 193 countries recognised by the UN", 'True', 
-               'False', 1], 
+               'False', 1, "True"], 
       
-        3: ["Jeff Bezos is the richest person in the world.", 'true', 'false', 2],
+        3: ["Jeff Bezos is the richest person in the world.", 'True', 'False', 2, "False"],
       
-        4: ["The number 1 a prime number", 'True', 'False', 2],
+        4: ["‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ The number 1 a prime number‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ", 'True', 'False', 2, "False"],
       
-        5: ["The Film 'Titanic' has won the most Oscars", 'True', 'False', 1],
+        5: ["‎ ‎ ‎ ‎ ‎ ‎ The Film 'Titanic' has won the most Oscars‎ ‎ ‎ ‎ ‎ ‎ ", 'True', 'False', 1, "True"],
       
       }
 
         
-        self.True_button = Button(parent, text="true", font=("Monoid", "35", "bold"), bg="#FFE3D8",height= 2, width= 6,)
-        self.True_button.place(x=50,y=310)    
+        self.True_button = Button(parent, text = self.questions_answers[qnum][1], font=("Monoid", "35", "bold"), bg="#FFE3D8",height= 2, width= 6, command=lambda: [self.quizprogression(1)])
+        self.True_button.place(x=50,y=310)   #true buttons  
+
+        self.var1=IntVar()
         
-        self.False_button = Button(parent, text="False", font=("Monoid", "35", "bold"), bg="#FFE3D8",height= 2, width= 6,)
-        self.False_button.place(x=430,y=310)   
+        self.False_button = Button(parent, text = self.questions_answers[qnum][2], font=("Monoid", "35", "bold"), bg="#FFE3D8",height= 2, width= 6, command=lambda: [self.quizprogression(2)])
+        self.False_button.place(x=430,y=310)   #false buttons 
 
+        self.question_label=Label (parent, text = self.questions_answers[qnum][0],font=("Tw Cen MT", "18", "bold"),bg=background_color, height= 2,)
+        self.question_label.place(x=40, y=40) #header for my questions 
 
+  def questions_setup(self):
+      selector()
+      self.var1.set(0)#configs the buttons and titles to fit the new question
+      self.question_label.config(text=self.questions_answers[qnum][0])
+      self.True_button.config(text=self.questions_answers[qnum][1]) 
+      self.False_button.config(text=self.questions_answers[qnum][2]) 
 
-
-
-
-
-
+  
+  def quizprogression(self,x):
+    global score 
+    if len(asked)>4: #to determine if its the last question and just end the quiz after 
+      end()
+    else: 
+      if x==self.questions_answers[qnum][3]: #if choice made is correct
+        score+=1
+        print("right")#add one to score
+        self.questions_setup() #run method to next question
+      else: #if choice is incorrect
+        score+=0
+        print("wrong")
+        print(choice)
+        messagebox.showinfo("srry","The correct answer was " + self.questions_answers[qnum][4])
+        self.questions_setup() #move to next question
+      
+def end(self):
+  
+  
   
 
 
 
-
-if __name__ =="__main__":
+  if __name__ =="__main__":
     root = Tk()
     root.title("general knowledge quiz") 
     root.geometry("700x450")

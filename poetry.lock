@@ -1,0 +1,15 @@
+[[package]]
+name = "choice"
+version = "0.1"
+description = "Easy request and response GUI for Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.8"
+content-hash = "9bec4c5b806730b7d421fbd0c205ac66c54b8443a9d3c65983687fdf605c74df"
+
+[metadata.files]
+choice = []
