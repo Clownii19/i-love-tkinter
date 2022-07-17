@@ -65,16 +65,16 @@ class questions:
 
         self.questions_answers = {
         1:  ["‎ ‎ ‎ ‎ ‎ ‎ The thumb has the fastest growing nail.‎ ‎ ‎ ‎ ‎ ‎ ", 
-               'True', 'False', 2, "False"], 
+               'True', 'False', 2, "False", "thumb.PNG"], 
       
         2: ["There are 193 countries recognised by the UN", 'True', 
-               'False', 1, "True"], 
+               'False', 1, "True", "UN.png"], 
       
-        3: ["Jeff Bezos is the richest person in the world.", 'True', 'False', 2, "False"],
+        3: ["Jeff Bezos is the richest person in the world.‎ ‎ ‎ ‎ ‎ ‎", 'True', 'False', 2, "False", "jeffbezos.png"],
       
-        4: ["‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ The number 1 is a prime number‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ", 'True', 'False', 2, "False"],
+        4: ["‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ The number 1 is a prime number‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ", 'True', 'False', 2, "False", "1.png"],
       
-        5: ["‎ ‎ ‎ ‎ ‎ ‎ The Film 'Titanic' has won the most Oscars‎ ‎ ‎ ‎ ‎ ‎ ", 'True', 'False', 1, "True"],
+        5: ["‎ ‎ ‎ ‎ ‎ ‎ The Film 'Titanic' has won the most Oscars‎ ‎ ‎ ‎ ‎ ‎ ", 'True', 'False', 1, "True", "titanic.PNG"],
       
       }
 
@@ -89,14 +89,20 @@ class questions:
 
         self.question_label=Label (parent, text = self.questions_answers[qnum][0],font=("Tw Cen MT", "18", "bold"),bg=background_color, height= 2,)
         self.question_label.place(x=40, y=40) 
-
+    
+        self.photo= PhotoImage(file = "1.png") #place holder image 
+        self.image= Button(parent, image = self.photo)
+        self.image.place(x=50, y=105, height=190, width=600)
+        self.photo.config(file=self.questions_answers[qnum][5])#sets the correct image for the first question
+      
+    
   def questions_setup(self):
       selector()
       self.var1.set(0)#configs the buttons and titles to fit the new question
       self.question_label.config(text=self.questions_answers[qnum][0])
       self.True_button.config(text=self.questions_answers[qnum][1]) 
       self.False_button.config(text=self.questions_answers[qnum][2]) 
-
+      self.photo.config(file=self.questions_answers[qnum][5],)
   
   def quizprogression(self,x):
     global score 
@@ -121,21 +127,17 @@ class questions:
         score+=0
         print("wrong")
         print(choice)
-        messagebox.showinfo("srry","The correct answer was " + self.questions_answers[qnum][4])
+        messagebox.showinfo("sorry about that","The correct answer was " + self.questions_answers[qnum][4])
         self.questions_setup() #move to next question
       
   def end(self): 
       self.question_label.destroy()
       self.True_button.destroy()
       self.False_button.destroy()
+      self.image.destroy()
 
 
 
-class endscreen: 
-  def __init__(self):
-      self.end_label=Label (parent, text = ("Great Job!" + name), font=("Tw Cen MT", "35", "bold"),bg=background_color, height= 2,)
-      self.end_label.place(x=40, y=40) 
-    
 
 
 
